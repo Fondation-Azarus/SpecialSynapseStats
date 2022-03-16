@@ -22,6 +22,7 @@ With this plug-in you can :
 - [x] Know how many times did a player use a specific item.
 - [x] Know how many times did the player spawn as a specific role.
 - [x] Configure whether SCP should be able to escape or not.
+- [ ] Choose the round decimal.
 - [ ] Cook a baguette.
 - [x] Add translations.
 
@@ -46,11 +47,18 @@ This plug-in brings 3 new commands :
 
 ***
 
+## Configs
+| Config name | Type | Description |
+| :-------------: | :----: | :------ |
+| 
+
+***
+
 ## You want to use this system ?
-This plug-in contains a lot of static method you can easily use in your own plug-ins.
+This plug-in contains a lot of static method you can easily use in your own plug-ins (like `AddDataFloat` or `AddExp`). 
 Every static method has a summary explaining what it does.
-All you need to do is to add a reference to the `.dll` file in your plug-in.
-(If your plug-in uses SpecialSynapseStats then you should always have both in your plugin directory.) 
+All you need to do is to add a reference to the `.dll` file in your plug-in (on Visual Studio you can simply right-click on "References" > "Add").
+(If your plug-in uses SpecialSynapseStats then you should always have both `.dll` files in your plugin directory.) 
 
 ***
 
