@@ -1,2 +1,0 @@
-C:\Users\xacyc\source\repos\SpecialSynapseStats\SpecialSynapseStats\obj\Debug\SpecialSynapseStats.csprojAssemblyReference.cache
-C:\Users\xacyc\source\repos\SpecialSynapseStats\SpecialSynapseStats\obj\Debug\SpecialSynapseStats.csproj.CoreCompileInputs.cache
