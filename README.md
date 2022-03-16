@@ -52,6 +52,222 @@ This plug-in brings 3 new commands :
 | :-------------: | :----: | :------ |
 | 
 
+Default configs :
+```[SpecialSynapseStats]
+{
+# Before modifying configs, you should read the github, if you have any questions you can always contact me on Discord ! Plug-in disabled ? :
+disabled: false
+# What's your UTC ? :
+utc: 1
+# XP multiplicator :
+expMultiplier: 1
+# XP needed for first level :
+firstLevelExpNeeded: 200
+# Should this plug-in use 'qXpLevel' (if false it will use 'rXpLevel')
+xpRorQ: false
+# Adds to the current level's XP needed to get the next one's :
+rExpLevel: 30
+# Multiplies the current level's XP needed to get the next one's :
+qExpLevel: 1.04999995
+# How many levels are necessary to get one big level :
+nmbrLevelNeededBigLevel: 35
+# The amount of XP a specific role or team should get for a specific action :
+listExpRewardsRoleID:
+- roleID: 1
+  team: SCP
+  survivalExp: 5
+  escapeExp: 100
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    6: 20
+    15: 35
+  teamKillExp:
+    MTF: 40
+    SCP: 80
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 6
+  team: SCP
+  survivalExp: 6
+  escapeExp: 100
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 10
+  teamKillExp:
+    CHI: 40
+    SCP: 100
+  scpKillAssistExp: 50
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 15
+  team: SCP
+  survivalExp: 7
+  escapeExp: 0
+  escapeAssistExp: 50
+  captureExp: 50
+  roleIDKillExp:
+    1: 8
+  teamKillExp:
+    CHI: 35
+    SCP: 100
+  scpKillAssistExp: 50
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 0
+  team: MTF
+  survivalExp: 7
+  escapeExp: 0
+  escapeAssistExp: 60
+  captureExp: 35
+  roleIDKillExp:
+    1: 10
+  teamKillExp:
+    CHI: 30
+    SCP: 100
+  scpKillAssistExp: 50
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 0
+  team: CHI
+  survivalExp: 7
+  escapeExp: 0
+  escapeAssistExp: 20
+  captureExp: 42
+  roleIDKillExp:
+    6: 5
+    15: 20
+  teamKillExp:
+    MTF: 30
+    SCP: 10
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 0
+  team: SCP
+  survivalExp: 2.5
+  escapeExp: 30
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 5
+    6: 5
+    15: 5
+  teamKillExp:
+    CHI: 3
+    MTF: 5
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 9
+  team: SCP
+  survivalExp: 2.5
+  escapeExp: 30
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 5
+    6: 5
+    15: 5
+  teamKillExp:
+    CHI: 3
+    MTF: 5
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 5
+  team: SCP
+  survivalExp: 5
+  escapeExp: 50
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 4
+    6: 4
+    15: 4
+  teamKillExp:
+    CHI: 3
+    MTF: 4
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 3
+  team: SCP
+  survivalExp: 2
+  escapeExp: 10
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+  teamKillExp:
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 7
+  team: SCP
+  survivalExp: 2
+  escapeExp: 0
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+  teamKillExp:
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 17
+  team: SCP
+  survivalExp: 2.5
+  escapeExp: 50
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 5
+    6: 5
+    15: 5
+  teamKillExp:
+    CHI: 4
+    MTF: 5
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+- roleID: 16
+  team: SCP
+  survivalExp: 2.5
+  escapeExp: 50
+  escapeAssistExp: 0
+  captureExp: 0
+  roleIDKillExp:
+    1: 5
+    6: 5
+    15: 5
+  teamKillExp:
+    CHI: 4
+    MTF: 5
+  scpKillAssistExp: 0
+  scpEscapeExp: 0
+  warheadExp: 0
+# XP given to connected players in general :
+expGeneralPerMinute: 7.5
+# Should Facility Guards be considered as a part of the MTF team ? :
+guardMTF: false
+# Can a SCP escape ? :
+scpEscape: true
+# Must the escaped person's allies be at the surface to receive assist escape XP ? :
+assistEscapeSurfaceZone: false
+# XP given to SCP-106 when he grabs someone :
+scp106GrabExp: 6
+# Should killing SCP other than instances count as a kill assist on SCP for SCP Foundation staff ? :
+warheadScpKillAssist: true
+# A list of stats that should be private :
+privateStats:
+- ConsentDNT
+- Teamkill(s)
+- Kick(s)
+- Ban(s)
+- Total ban duration
+}```
+
 ***
 
 ## You want to use this system ?
