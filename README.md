@@ -50,7 +50,7 @@ This plug-in brings 3 new commands :
 ## Configs
 | Config name | Type | Description |
 | :-------------: | :----: | :------ |
-| 
+| disabled | bool | Is the plug-in disabled ? If it is other plug-ins will still be able to add datas/XP.
 
 Default configs :
 ```[SpecialSynapseStats]
