@@ -15,20 +15,42 @@ With this plug-in you can :
 - [x] Configure how much XP is needed to get a level.
 - [x] Configure something similar to a "prestige" system with "bigLevels".
 - [x] Know how much kills/damages did a player.
+- [x] Know how many times did a player escape.
 - [x] Know how many times died a player and how much damages he received.
 - [x] Know how many games played a player.
 - [x] Know how much time was a player banned in total (in minutes) and how many times he was kicked and banned.
 - [x] Know how many times did a player use a specific item.
 - [x] Know how many times did the player spawn as a specific role.
+- [x] Configure whether SCP should be able to escape or not.
+- [ ] Cook a baguette.
 - [x] Add translations.
+
 And more...
 
-Additionally this plug-in brings 3 new commands :
+***
+
+## SSS Profile
+The SSS Profile is a list of datas that each connected player has, it contains, but is not limited to, all the datas listed above.
+It can be accessed by the `.SSSProfile` command by other player as well as the player itself.
+The player can see all his datas but other players (except moderators with the `vanilla.PlayerSensitiveDataAccess` permission) can't see his private datas (which you can configure).
+
+***
+
+## Commands
+This plug-in brings 3 new commands :
 | Command | Function |
 | :-------------: | :------ |
 | .ConsentDNT | Allows the server to store datas about the player even if the player enabled "DoNotTrack" |
 | .RevokeConsentDNT | Revokes the player's consent to store data and deletes all his already existing datas. |
 | .SSSProfile {Someone's nickname or ID} {'staff' if you want to see someone else's private stats} | Shows a SSS profile. Only players with the "vanilla.PlayerSensitiveDataAccess" permission can use the "staff" argument. |
+
+***
+
+## You want to use this system ?
+This plug-in contains a lot of static method you can easily use in your own plug-ins.
+Every static method has a summary explaining what it does.
+All you need to do is to add a reference to the `.dll` file in your plug-in.
+(If your plug-in uses SpecialSynapseStats then you should always have both in your plugin directory.) 
 
 ***
 
