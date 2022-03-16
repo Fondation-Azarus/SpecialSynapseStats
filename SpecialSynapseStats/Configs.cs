@@ -6,7 +6,7 @@ namespace SpecialSynapseStats
 {
     public class Configs : AbstractConfigSection
     {
-        [Description("Before modifying configs, you should read the github, if you have any questions you can always contact me on Discord !\nPlug-in disabled ? :")]
+        [Description("Before modifying configs, you should read the github, if you have any questions you can always contact me on Discord ! Plug-in disabled ? :")]
         public bool disabled = false;
 
         [Description("XP multiplicator :")]

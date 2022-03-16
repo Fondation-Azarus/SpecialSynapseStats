@@ -107,7 +107,7 @@ namespace SpecialSynapseStats
             if (ev.SpawnReason == CharacterClassManager.SpawnReason.ForceClass || ev.SpawnReason == CharacterClassManager.SpawnReason.Overwatch || ev.SpawnReason == CharacterClassManager.SpawnReason.Died)
                 return;
 
-            PluginClass.AddDataFloat(ev.Player, ev.Role.ToString()); // U
+            PluginClass.AddDataFloat(ev.Player, ev.Role.ToString());
         }
 
         private void OnItemUse(PlayerItemInteractEventArgs ev)
@@ -118,7 +118,7 @@ namespace SpecialSynapseStats
             if (ev.State != ItemInteractState.Finalizing)
                 return;
 
-            PluginClass.AddDataFloat(ev.Player, ev.CurrentItem.Name); // U
+            PluginClass.AddDataFloat(ev.Player, ev.CurrentItem.Name);
         }
 
         private void OnDamage(PlayerDamageEventArgs ev)
@@ -128,8 +128,8 @@ namespace SpecialSynapseStats
 
             if (ev.Victim != ev.Killer && !AreAllies(ev.Victim, ev.Killer))
             {
-                PluginClass.AddDataFloat(ev.Killer, PluginClass.dmgsInflictedData, ev.Damage); // U
-                PluginClass.AddDataFloat(ev.Victim, PluginClass.dmgasReceivedData, ev.Damage); // U
+                PluginClass.AddDataFloat(ev.Killer, PluginClass.dmgsInflictedData, ev.Damage);
+                PluginClass.AddDataFloat(ev.Victim, PluginClass.dmgasReceivedData, ev.Damage);
             }
         }
 
@@ -240,11 +240,11 @@ namespace SpecialSynapseStats
 
             if (ev.BanDuration > 0) // Ban
             {
-                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.bansData); // P
-                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.totalBanDurationData, (int)ev.BanDuration); // P
+                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.bansData);
+                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.totalBanDurationData, (int)ev.BanDuration);
             }
             else // Kick
-                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.kicksData); // P
+                PluginClass.AddDataFloat(ev.BannedPlayer, PluginClass.kicksData);
         }
     }
 }
