@@ -1,5 +1,5 @@
 # SpecialSynapseStats
-A Synapse 2 plug-in that adds a XP and a stats system.
+A Synapse 2 plug-in that adds a XP and a stats system you can easily use in your server or your own plug-ins.
 
 **TO RESPECT THE 8.11 [VSR](https://scpslgame.com/Verified_server_rules.pdf) RULE THIS PLUG-IN WON'T STORE ANY DATA FROM PLAYERS WHO ENABLED "Do Not Track" (DNT) UNTIL IT RECEIVES CONSENT FROM THE PLAYER VIA THE `.ConsentDNT` COMMAND.**
 
@@ -27,14 +27,6 @@ With this plug-in you can :
 - [x] Add translations.
 
 And more...
-
-***
-
-## You want to use this system ?
-This plug-in contains a lot of static method you can easily use in your own plug-ins (like `AddDataFloat` or `AddExp`). 
-Every static method has a summary explaining what it does.
-All you need to do is to add a reference to the `.dll` file in your plug-in (on Visual Studio you can simply right-click on "References" > "Add").
-(If your plug-in uses SpecialSynapseStats then you should always have both `.dll` files in your plugin directory.) 
 
 ***
 
