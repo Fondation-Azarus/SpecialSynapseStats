@@ -14,7 +14,7 @@ namespace SpecialSynapseStats.Commands
         Platforms = new[] { Platform.ClientConsole },
         Usage = ".RevokeConsentDNT"
     )]
-    class RevokeConsentDNTCommand : ISynapseCommand
+    internal class RevokeConsentDNTCommand : ISynapseCommand
     {
         public CommandResult Execute(CommandContext context)
         {

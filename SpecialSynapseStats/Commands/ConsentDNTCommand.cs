@@ -10,7 +10,7 @@ namespace SpecialSynapseStats.Commands
         Platforms = new[] { Platform.ClientConsole },
         Usage = ".ConsentDNT"
     )]
-    class ConsentementDNTCommand : ISynapseCommand
+    internal class ConsentementDNTCommand : ISynapseCommand
     {
         public CommandResult Execute(CommandContext context)
         {

@@ -13,7 +13,7 @@ namespace SpecialSynapseStats.Commands
         Platforms = new[] { Platform.ClientConsole },
         Usage = ".SSSProfile [Someone's nickname or ID] [Put 'staff' here if you want to see someone else's private stats]"
     )]
-    class SSSProfileCommand : ISynapseCommand
+    internal class SSSProfileCommand : ISynapseCommand
     {
         public CommandResult Execute(CommandContext context)
         {
