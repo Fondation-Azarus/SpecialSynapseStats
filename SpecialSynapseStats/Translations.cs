@@ -36,11 +36,11 @@ namespace SpecialSynapseStats
         
         public string alreadyGivenConsentErrorMessage = "You already gave your consent.";
         
-        public string DNTNotEnabledErrorMessage = "You didn't enable the `Do Not Track` parameter. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATAS, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.";
+        public string DNTNotEnabledErrorMessage = "You didn't enable the `Do Not Track` parameter. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATA, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.";
         
-        public string revokeDNTAddConfirmationErrorMessage = "Add 'Confirmation' to this command before entering it if you're sure you want to revoke your consent. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATAS, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.";
+        public string revokeDNTAddConfirmationErrorMessage = "Add 'Confirmation' to this command before entering it if you're sure you want to revoke your consent. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATA, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.";
         
-        public string revokeDNTOkMessage = "Datas successfully deleted.";
+        public string revokeDNTOkMessage = "Data successfully deleted.";
 
         public string noPlayerWithIDErrorMessage = "No player with this ID was found.";
 
@@ -48,7 +48,7 @@ namespace SpecialSynapseStats
 
         public string noPermissionErrorMessage = "You need the 'vanilla.PlayerSensitiveDataAccess' to access private stats.";
 
-        public string seeProfilOkMessage = "You should now see a SSSProfile.";
+        public string seeProfilOkMessage = "You should see a SSS Profile in 1 second.";
 
         public IDictionary<string, string> translationDictionnary = new Dictionary<string, string>
         {

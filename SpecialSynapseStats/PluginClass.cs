@@ -41,8 +41,8 @@ namespace SpecialSynapseStats
         /// <returns><see langword="true"/> if you can add data to this player ; otherwise, <see langword="false"/>.</returns>
         public static bool CanAddData(Player player)
         {
-            if (Config.disabled)
-                return false;
+            //if (Config.disabled)
+            //    return false;
 
             if (!player.DoNotTrack)
                 return true;
@@ -74,41 +74,41 @@ namespace SpecialSynapseStats
         /// <summary>
         /// Adds XP to the player <paramref name="player"/> if it's possible.
         /// </summary>
-        /// <param name="player">The player.</param><param name="exp">The amount of XP you want to add, shouldn't be negative.</param><param name="reason">The reason that should be displayed as a hint to the player, "none" will hide the hint and only send a message in the console.</param>
-        public static void AddExp(Player player, float exp = 100, string reason = "")
+        /// <param name="player">The player.</param><param name="xp">The amount of XP you want to add, shouldn't be negative.</param><param name="reason">The reason that should be displayed as a hint to the player, "none" will hide the hint and only send a message in the console.</param>
+        public static void AddXp(Player player, float xp = 100, string reason = "")
         {
-            if (!CanAddData(player) || exp < 0 || Config.expMultiplier == 0)
+            if (!CanAddData(player) || xp < 0 || Config.xpMultiplier == 0)
                 return;
 
             // Yay lots of maths ! :D
 
-            exp *= Config.expMultiplier;
-            float expTotal = float.Parse(player.GetData(experienceData)) + (float)Math.Round(exp, 2);
+            xp *= Config.xpMultiplier;
+            float xpTotal = float.Parse(player.GetData(experienceData)) + (float)Math.Round(xp, 2);
             int level = 0;
 
 
-            float expNeeded = Config.xpRorQ ? (float)Math.Round((decimal)(Config.firstLevelExpNeeded * Math.Pow(Config.qExpLevel, level + int.Parse(player.GetData(levelData)))), 2)
-                : (float)Math.Round((decimal)(Config.firstLevelExpNeeded + Config.rExpLevel * (level + int.Parse(player.GetData(levelData)))), 2);
+            float xpNeeded = Config.xpRorQ ? (float)Math.Round((decimal)(Config.firstLevelXpNeeded * Math.Pow(Config.qXpLevel, level + int.Parse(player.GetData(levelData)))), 2)
+                : (float)Math.Round((decimal)(Config.firstLevelXpNeeded + Config.rXpLevel * (level + int.Parse(player.GetData(levelData)))), 2);
 
 
-            while (expTotal >= expNeeded)
+            while (xpTotal >= xpNeeded)
             {
                 level++;
-                expTotal -= expNeeded;
-                expNeeded = Config.xpRorQ ? (float)Math.Round((decimal)(Config.firstLevelExpNeeded * Math.Pow(Config.qExpLevel, level + int.Parse(player.GetData(levelData)))), 2)
-                : (float)Math.Round((decimal)(Config.firstLevelExpNeeded + Config.rExpLevel * (level + int.Parse(player.GetData(levelData)))), 2);
+                xpTotal -= xpNeeded;
+                xpNeeded = Config.xpRorQ ? (float)Math.Round((decimal)(Config.firstLevelXpNeeded * Math.Pow(Config.qXpLevel, level + int.Parse(player.GetData(levelData)))), 2)
+                : (float)Math.Round((decimal)(Config.firstLevelXpNeeded + Config.rXpLevel * (level + int.Parse(player.GetData(levelData)))), 2);
             }
 
-            if (exp > 0)
+            if (xp > 0)
             {
-                player.SetData(experienceData, expTotal.ToString());
+                player.SetData(experienceData, xpTotal.ToString());
                 if (reason != "none")
                 {
-                    player.GiveTextHint(reason == "" ? Translation.ActiveTranslation.xpMessage.Replace("%xp%", exp.ToString()) : $"{reason}\n{Translation.ActiveTranslation.xpMessage.Replace("%xp%", exp.ToString())}", 2);
-                    player.SendConsoleMessage(reason == "" ? Translation.ActiveTranslation.xpMessage.Replace("%xp%", exp.ToString()) : $"{reason}\n{Translation.ActiveTranslation.xpMessage.Replace("%xp%", exp.ToString())}", "green");
+                    player.GiveTextHint(reason == "" ? Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", 2);
+                    player.SendConsoleMessage(reason == "" ? Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", "green");
                 }
                 else
-                    player.SendConsoleMessage(Translation.ActiveTranslation.xpMessage.Replace("%xp%", exp.ToString()), "green");
+                    player.SendConsoleMessage(Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()), "green");
             }
 
             AddLevel(player, level);
@@ -120,7 +120,7 @@ namespace SpecialSynapseStats
         /// <param name="player">The player.</param><param name="level">The amount of levels you want to add, shouldn't be negative.</param>
         public static void AddLevel(Player player, int level = 1)
         {
-            if (!CanAddData(player) || level < 0 || Config.expMultiplier == 0)
+            if (!CanAddData(player) || level < 0 || Config.xpMultiplier == 0)
                 return;
 
             int levelTotal = int.Parse(player.GetData(levelData)) + level;
@@ -148,7 +148,7 @@ namespace SpecialSynapseStats
         /// <param name="player">The player.</param><param name="bigLevel">The amount of big levels you want to add, shouldn't be negative.</param>
         public static void AddBigLevel(Player player, int bigLevel = 1)
         {
-            if (!CanAddData(player) || bigLevel <= 0 || Config.expMultiplier == 0)
+            if (!CanAddData(player) || bigLevel <= 0 || Config.xpMultiplier == 0)
                 return;
 
             AddDataFloat(player, bigLevelData, bigLevel);
@@ -170,23 +170,15 @@ namespace SpecialSynapseStats
 
             if (key.ToLower() == "all")
             {
-                foreach (string aKey in pdo.Data.Keys.ToList())
-                {
-                    pdo.Data.Clear();
-                    pdo.Data.Remove(aKey);
-                    DatabaseManager.PlayerRepository.Save(pdo);
-                }
+                pdo.Data.Clear();
+                DatabaseManager.PlayerRepository.Save(pdo);
                 return true;
             }
 
             if (player.GetData(key) == null)
                 return false;
 
-            string k = pdo.Data.Keys.FirstOrDefault(localKey => localKey == key);
-            if (k == null)
-                return false;
-
-            pdo.Data.Remove(k);
+            pdo.Data.Remove(key);
             DatabaseManager.PlayerRepository.Save(pdo);
             return true;
         }
@@ -197,7 +189,7 @@ namespace SpecialSynapseStats
         /// <param name="player">The player.</param>
         public static void FirstLogin(Player player)
         {
-            player.SetData(firstLogin, DateTime.UtcNow.AddHours(1).ToString());
+            player.SetData(firstLogin, DateTime.UtcNow.AddHours(Config.utc).ToString());
             player.SetData(playtimeData, "0");
             player.SetData(bigLevelData, "0");
             player.SetData(levelData, "0");
@@ -222,22 +214,22 @@ namespace SpecialSynapseStats
         public static readonly string dataConsent = "ConsentDNT";
         public static readonly string firstLogin = "First login";
         public static readonly string playtimeData = "Playtime";
-        public static readonly string bigLevelData = "Prestige";
+        public static readonly string bigLevelData = "BigLevel";
         public static readonly string levelData = "Level";
         public static readonly string experienceData = "XP";
 
-        public static readonly string startedRoundsData = "Started round(s)";
-        public static readonly string endedRoundsData = "Ended round(s)";
-        public static readonly string roundsData = "Complete round(s)";
-        public static readonly string escapesData = "Escape(s)";
-        public static readonly string killsData = "Kill(s)";
-        public static readonly string dmgsInflictedData = "Inflicted damage(s)";
-        public static readonly string deathsData = "Death(s)";
-        public static readonly string dmgasReceivedData = "Received damage(s)";
+        public static readonly string startedRoundsData = "Started round";
+        public static readonly string endedRoundsData = "Ended round";
+        public static readonly string roundsData = "Complete round";
+        public static readonly string escapesData = "Escape";
+        public static readonly string killsData = "Kill";
+        public static readonly string dmgsInflictedData = "Inflicted damage";
+        public static readonly string deathsData = "Death";
+        public static readonly string dmgasReceivedData = "Received damage";
 
-        public static readonly string teamkillsData = "Teamkill(s)";
-        public static readonly string kicksData = "Kick(s)";
-        public static readonly string bansData = "Ban(s)";
+        public static readonly string teamkillsData = "Teamkill";
+        public static readonly string kicksData = "Kick";
+        public static readonly string bansData = "Ban";
         public static readonly string totalBanDurationData = "Total ban duration";
     }
 }

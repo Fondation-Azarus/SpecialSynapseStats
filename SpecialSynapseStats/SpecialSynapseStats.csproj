@@ -72,7 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\SSSProfilCommand.cs" />
+    <Compile Include="Commands\SSSProfileCommand.cs" />
     <Compile Include="Commands\RevokeConsentDNTCommand.cs" />
     <Compile Include="Commands\ConsentDNTCommand.cs" />
     <Compile Include="Configs.cs" />

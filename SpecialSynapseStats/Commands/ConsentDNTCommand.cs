@@ -5,7 +5,7 @@ namespace SpecialSynapseStats.Commands
     [CommandInformation(
         Name = "ConsentDNT",
         Aliases = new[] { "" },
-        Description = "Allows the server to store some datas linked to you.",
+        Description = "Allows the server to store some data linked to you.",
         Permission = "",
         Platforms = new[] { Platform.ClientConsole },
         Usage = ".ConsentDNT"

@@ -9,7 +9,7 @@ namespace SpecialSynapseStats.Commands
     [CommandInformation(
         Name = "RevokeConsentDNT",
         Aliases = new[] { "" },
-        Description = "Revokes your consent which means we can't store any data from you. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATAS, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.",
+        Description = "Revokes your consent which means we can't store any data from you. REVOKING YOUR CONSENT WILL IMMEDIATELY DELETE ALL YOUR DATA, WE CAN'T RESTORE THEM AFTERWARDS SO BE SURE YOU REALLY WANT T0 DO THIS BEFORE ENTERING THIS COMMAND.",
         Permission = "",
         Platforms = new[] { Platform.ClientConsole },
         Usage = ".RevokeConsentDNT"

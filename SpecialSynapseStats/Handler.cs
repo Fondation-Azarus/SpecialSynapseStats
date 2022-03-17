@@ -39,16 +39,16 @@ namespace SpecialSynapseStats
         private static bool PurelyMTF(Player player) => PluginClass.Config.guardMTF ? player.Team == Team.MTF : player.RoleID != (int)RoleType.FacilityGuard && player.Team == Team.MTF;
 
         /// <summary>
-        /// Tries to get the <see cref="Configs.ExpRewardsRoleID"/> that has a <see cref="Configs.ExpRewardsRoleID.roleID"/> equal to the player <paramref name="player"/>'s one, if it doesn't find one it will try to find one that has a <see cref="Configs.ExpRewardsRoleID.team"/> equal to the player <paramref name="player"/>'s one.
+        /// Tries to get the <see cref="Configs.XpRewardsRoleID"/> that has a <see cref="Configs.XpRewardsRoleID.roleID"/> equal to the player <paramref name="player"/>'s one, if it doesn't find one it will try to find one that has a <see cref="Configs.XpRewardsRoleID.team"/> equal to the player <paramref name="player"/>'s one.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <returns><see cref="Configs.ExpRewardsRoleID"/> if it finds one ; otherwise, <see langword="null"/>.</returns>
-        public static Configs.ExpRewardsRoleID GetExpRewardsRoleID(Player player)
+        /// <returns><see cref="Configs.XpRewardsRoleID"/> if it finds one ; otherwise, <see langword="null"/>.</returns>
+        public static Configs.XpRewardsRoleID GetXpRewardsRoleID(Player player)
         {
             if (player == null || !PluginClass.CanAddData(player))
                 return null;
 
-            return PluginClass.Config.listExpRewardsRoleID.FirstOrDefault(e => e.roleID == player.RoleID || (e.team == Team.MTF && PurelyMTF(player))) ?? PluginClass.Config.listExpRewardsRoleID.FirstOrDefault(e => e.team == player.Team);
+            return PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.roleID == player.RoleID || (e.team == Team.MTF && PurelyMTF(player))) ?? PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.team == player.Team);
         }
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace SpecialSynapseStats
         /// <returns><see langword="true"/> if they are allies ; otherwise, <see langword="false"/>.</returns>
         public static bool AreAllies(Player firstPlayer, Player secondPlayer) => firstPlayer.Team == secondPlayer.Team || (firstPlayer.Team == Team.MTF && secondPlayer.Team == Team.RSC) || (firstPlayer.Team == Team.CHI && secondPlayer.Team == Team.CDP);
 
-        private IEnumerator<float> ExpMinReward()
+        private IEnumerator<float> XpMinReward()
         {
             while (!Round.Get.RoundEnded)
             {
                 foreach (Player p in Server.Get.Players)
                 {
                     PluginClass.AddDataFloat(p, PluginClass.playtimeData);
-                    PluginClass.AddExp(p, GetExpRewardsRoleID(p) == null ? PluginClass.Config.expGeneralPerMinute : GetExpRewardsRoleID(p).survivalExp + PluginClass.Config.expGeneralPerMinute, "none");
+                    PluginClass.AddXp(p, GetXpRewardsRoleID(p) == null ? PluginClass.Config.xpGeneralPerMinute : GetXpRewardsRoleID(p).survivalXp + PluginClass.Config.xpGeneralPerMinute, "none");
                 }
                 yield return Timing.WaitForSeconds(60);
             }
@@ -94,25 +94,25 @@ namespace SpecialSynapseStats
 
         private void OnRoundStart()
         {
-            Timing.RunCoroutine(ExpMinReward());
+            Timing.RunCoroutine(XpMinReward());
             foreach (Player p in Server.Get.Players)
                 PluginClass.AddDataFloat(p, PluginClass.startedRoundsData);
         }
 
         private void OnSetClass(PlayerSetClassEventArgs ev)
         {
-            if (ev.Player == null)
+            if (ev.Player == null || !PluginClass.Config.spawnClassRegister)
                 return;
 
             if (ev.SpawnReason == CharacterClassManager.SpawnReason.ForceClass || ev.SpawnReason == CharacterClassManager.SpawnReason.Overwatch || ev.SpawnReason == CharacterClassManager.SpawnReason.Died)
                 return;
 
-            PluginClass.AddDataFloat(ev.Player, ev.Role.ToString());
+                PluginClass.AddDataFloat(ev.Player, ev.Role.ToString());
         }
 
         private void OnItemUse(PlayerItemInteractEventArgs ev)
         {
-            if (ev.Player == null || ev.CurrentItem == null)
+            if (ev.Player == null || ev.CurrentItem == null || !PluginClass.Config.itemUseRegister)
                 return;
 
             if (ev.State != ItemInteractState.Finalizing)
@@ -141,7 +141,7 @@ namespace SpecialSynapseStats
             if (ev.Scp.RoleType != RoleType.Scp106 || ev.Target.GodMode || ev.AttackType != ScpAttackType.Scp106_Grab)
                 return;
 
-            PluginClass.AddExp(ev.Scp, PluginClass.Config.scp106GrabExp, PluginClass.Translation.ActiveTranslation.scp106grabMessage);
+            PluginClass.AddXp(ev.Scp, PluginClass.Config.scp106GrabXp, PluginClass.Translation.ActiveTranslation.scp106grabMessage);
         }
 
         private void OnDeath(PlayerDeathEventArgs ev)
@@ -152,7 +152,7 @@ namespace SpecialSynapseStats
 
             if (ev.DamageType == DamageType.Warhead && PluginClass.Config.warheadScpKillAssist)
                 foreach (Player p in Server.Get.GetPlayers(p => p.Team == Team.MTF || p.Team == Team.RSC))
-                    PluginClass.AddExp(p, GetExpRewardsRoleID(p).scpKillAssistExp, PluginClass.Translation.ActiveTranslation.scpKillAssistMessage);
+                    PluginClass.AddXp(p, GetXpRewardsRoleID(p).scpKillAssistXp, PluginClass.Translation.ActiveTranslation.scpKillAssistMessage);
 
             if (ev.Killer == null)
                 return;
@@ -165,21 +165,21 @@ namespace SpecialSynapseStats
             else
                 PluginClass.AddDataFloat(ev.Killer, PluginClass.teamkillsData);
 
-            Configs.ExpRewardsRoleID erri = GetExpRewardsRoleID(ev.Killer);
+            Configs.XpRewardsRoleID erri = GetXpRewardsRoleID(ev.Killer);
             if (erri != null)
             {
-                if (!erri.roleIDKillExp.TryGetValue(ev.Victim.RoleID, out float exp1))
+                if (!erri.roleIDKillXp.TryGetValue(ev.Victim.RoleID, out float xp1))
                 {
-                    if (erri.teamKillExp.TryGetValue(ev.Victim.Team, out float exp2))
-                        PluginClass.AddExp(ev.Killer, exp2, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
+                    if (erri.teamKillXp.TryGetValue(ev.Victim.Team, out float xp2))
+                        PluginClass.AddXp(ev.Killer, xp2, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
                 }
                 else
-                    PluginClass.AddExp(ev.Killer, exp1, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
+                    PluginClass.AddXp(ev.Killer, xp1, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
             }
 
-            if (ev.Victim.Team == Team.SCP && ev.Killer.Team != Team.SCP)
-                foreach (Player p in Server.Get.GetPlayers(p => AreAllies(p, ev.Killer) && p != ev.Killer))
-                    PluginClass.AddExp(p, GetExpRewardsRoleID(p).scpKillAssistExp, PluginClass.Translation.ActiveTranslation.scpKillAssistMessage);
+            if (ev.Victim.Team == Team.SCP && ev.Killer.Team != Team.SCP && ev.DamageType != DamageType.Warhead)
+                foreach (Player p in Server.Get.GetPlayers(p => !AreAllies(p, ev.Killer)))
+                    PluginClass.AddXp(p, GetXpRewardsRoleID(p).scpKillAssistXp, PluginClass.Translation.ActiveTranslation.scpKillAssistMessage);
         }
 
         private void OnEscape(PlayerEscapeEventArgs ev)
@@ -187,7 +187,7 @@ namespace SpecialSynapseStats
             if (ev.Player == null)
                 return;
 
-            if (ev.Player.Team == Team.SCP && PluginClass.Config.scpEscape)
+            if (ev.Player.RealTeam == Team.SCP && PluginClass.Config.scpEscape)
             {
                 ev.Allow = true;
                 ev.SpawnRole = (int)RoleType.Spectator;
@@ -198,27 +198,27 @@ namespace SpecialSynapseStats
 
             if (!ev.IsCuffed)
             {
-                Configs.ExpRewardsRoleID erri = GetExpRewardsRoleID(ev.Player);
+                Configs.XpRewardsRoleID erri = GetXpRewardsRoleID(ev.Player);
                 if (erri == null)
                     return;
 
-                PluginClass.AddExp(ev.Player, erri.escapeExp, PluginClass.Translation.ActiveTranslation.escapeMessage);
+                PluginClass.AddXp(ev.Player, erri.escapeXp, PluginClass.Translation.ActiveTranslation.escapeMessage);
                 PluginClass.AddDataFloat(ev.Player, PluginClass.escapesData); // U
 
                 foreach (Player p in Server.Get.GetPlayers(p => AreAllies(p, ev.Player) && (p.Zone == ZoneType.Surface || !PluginClass.Config.assistEscapeSurfaceZone) && p != ev.Player))
-                    PluginClass.AddExp(p, GetExpRewardsRoleID(p).escapeAssistExp, PluginClass.Translation.ActiveTranslation.escapeAssistMessage.Replace("%player%", ev.Player.NickName));
+                    PluginClass.AddXp(p, GetXpRewardsRoleID(p).escapeAssistXp, PluginClass.Translation.ActiveTranslation.escapeAssistMessage.Replace("%player%", ev.Player.NickName));
             }
             
             if (ev.Cuffer == null)
                 return;
 
-            PluginClass.AddExp(ev.Cuffer, GetExpRewardsRoleID(ev.Cuffer).captureExp, PluginClass.Translation.ActiveTranslation.captureMessage.Replace("%player%", ev.Player.NickName));
+            PluginClass.AddXp(ev.Cuffer, GetXpRewardsRoleID(ev.Cuffer).captureXp, PluginClass.Translation.ActiveTranslation.captureMessage.Replace("%player%", ev.Player.NickName));
         }
 
         private void OnWarheadDetonation()
         {
-            foreach (Player ci in Server.Get.GetPlayers(p => GetExpRewardsRoleID(p).warheadExp > 0))
-                PluginClass.AddExp(ci, GetExpRewardsRoleID(ci).warheadExp, PluginClass.Translation.ActiveTranslation.warheadMessage);
+            foreach (Player ci in Server.Get.GetPlayers(p => GetXpRewardsRoleID(p).warheadXp > 0))
+                PluginClass.AddXp(ci, GetXpRewardsRoleID(ci).warheadXp, PluginClass.Translation.ActiveTranslation.warheadMessage);
         }
 
         private void OnRoundEnd()
