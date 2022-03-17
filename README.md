@@ -6,7 +6,7 @@ A Synapse 2 plug-in that adds a XP and a stats system.
 ***
 
 ## Description
-This plug-in has a lot of configs, make sure to take a look to the Wiki.
+This plug-in has a lot of configs, make sure to take a look to the [Wiki](https://github.com/Fondation-Azarus/SpecialSynapseStats/wiki).
 
 With this plug-in you can :
 - [x] Know the first time a player loged in.
