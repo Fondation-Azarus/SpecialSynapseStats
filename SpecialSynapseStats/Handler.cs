@@ -1,16 +1,11 @@
 ﻿using Synapse;
 using Synapse.Api;
 using Synapse.Api.Events.SynapseEventArguments;
-using Synapse.Api.Items;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using Synapse.Api.Enum;
-using Synapse.Database;
 using MEC;
 using System;
-using MapGeneration;
-using Synapse.Translation;
 
 namespace SpecialSynapseStats
 {

@@ -1,6 +1,5 @@
 ﻿using Synapse.Translation;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace SpecialSynapseStats
 {

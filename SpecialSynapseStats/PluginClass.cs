@@ -3,7 +3,6 @@ using Synapse.Translation;
 using Synapse.Api;
 using System;
 using Synapse.Database;
-using System.Linq;
 
 namespace SpecialSynapseStats
 {
@@ -211,25 +210,25 @@ namespace SpecialSynapseStats
         }
 
 
-        public static readonly string dataConsent = "ConsentDNT";
-        public static readonly string firstLogin = "First login";
-        public static readonly string playtimeData = "Playtime";
-        public static readonly string bigLevelData = "BigLevel";
-        public static readonly string levelData = "Level";
-        public static readonly string experienceData = "XP";
+        public const string dataConsent = "ConsentDNT";
+        public const string firstLogin = "First login";
+        public const string playtimeData = "Playtime";
+        public const string bigLevelData = "BigLevel";
+        public const string levelData = "Level";
+        public const string experienceData = "XP";
 
-        public static readonly string startedRoundsData = "Started round";
-        public static readonly string endedRoundsData = "Ended round";
-        public static readonly string roundsData = "Complete round";
-        public static readonly string escapesData = "Escape";
-        public static readonly string killsData = "Kill";
-        public static readonly string dmgsInflictedData = "Inflicted damage";
-        public static readonly string deathsData = "Death";
-        public static readonly string dmgasReceivedData = "Received damage";
+        public const string startedRoundsData = "Started round";
+        public const string endedRoundsData = "Ended round";
+        public const string roundsData = "Complete round";
+        public const string escapesData = "Escape";
+        public const string killsData = "Kill";
+        public const string dmgsInflictedData = "Inflicted damage";
+        public const string deathsData = "Death";
+        public const string dmgasReceivedData = "Received damage";
 
-        public static readonly string teamkillsData = "Teamkill";
-        public static readonly string kicksData = "Kick";
-        public static readonly string bansData = "Ban";
-        public static readonly string totalBanDurationData = "Total ban duration";
+        public const string teamkillsData = "Teamkill";
+        public const string kicksData = "Kick";
+        public const string bansData = "Ban";
+        public const string totalBanDurationData = "Total ban duration";
     }
 }
