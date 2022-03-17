@@ -52,7 +52,7 @@ This plug-in brings 3 new commands :
 | :-------------: | :----: | :------ |
 | disabled | bool | Is the plug-in disabled ? If it is other plug-ins will still be able to add datas/XP.
 
-Default configs :
+Default configs : (You shouldn't use them without any changes)
 ```[SpecialSynapseStats]
 {
 # Before modifying configs, you should read the github, if you have any questions you can always contact me on Discord ! Plug-in disabled ? :
