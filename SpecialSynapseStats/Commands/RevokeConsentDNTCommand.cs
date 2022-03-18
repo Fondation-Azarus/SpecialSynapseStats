@@ -28,7 +28,7 @@ namespace SpecialSynapseStats.Commands
 
             else if (context.Arguments.FirstOrDefault() == "Confirmation")
             {
-                PluginClass.DeleteData(context.Player, "all");
+                SSSMethods.DeleteData(context.Player, "all");
                 result.Message = PluginClass.Translation.ActiveTranslation.revokeDNTOkMessage;
                 result.State = CommandResultState.Ok;
             }

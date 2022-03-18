@@ -47,7 +47,7 @@ namespace SpecialSynapseStats
 
         public string noPermissionErrorMessage = "You need the 'vanilla.PlayerSensitiveDataAccess' to access private stats.";
 
-        public string seeProfilOkMessage = "You should see a SSS Profile in 1 second.";
+        public string seeProfilOkMessage = "You should see a SSS Profile.";
 
         public IDictionary<string, string> translationDictionnary = new Dictionary<string, string>
         {
