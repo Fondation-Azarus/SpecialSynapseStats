@@ -6,12 +6,12 @@ A Synapse 2 plug-in that adds a XP and a stats system you can easily use in your
 ***
 
 ## Description
-This plug-in has a lot of configs, make sure to take a look to the [Wiki](https://github.com/Fondation-Azarus/SpecialSynapseStats/wiki).
+_This plug-in has a lot of configs, make sure to take a look to the [Wiki](https://github.com/Fondation-Azarus/SpecialSynapseStats/wiki)._
 
 With this plug-in you can :
 - [x] Know the first time a player loged in.
 - [x] Know how much did a player play on your server (in minutes).
-- [x] Configure how much XP should a player be awarded for certain actions.
+- [x] Configure how much XP should a player be rewarded for certain actions.
 - [x] Configure how much XP is needed to get a level.
 - [x] Configure something similar to a "prestige" system with "bigLevels".
 - [x] Know how much kills/damages did a player.
