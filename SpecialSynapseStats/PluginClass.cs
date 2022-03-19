@@ -13,7 +13,7 @@ namespace SpecialSynapseStats
         SynapseMajor = SynapseController.SynapseMajor,
         SynapseMinor = SynapseController.SynapseMinor,
         SynapsePatch = SynapseController.SynapsePatch,
-        Version = "1.0.0"
+        Version = "1.0.1"
         )]
     public class PluginClass : AbstractPlugin
     {

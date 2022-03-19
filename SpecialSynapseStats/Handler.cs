@@ -170,16 +170,20 @@ namespace SpecialSynapseStats
                     return;
 
                 SSSMethods.AddXp(ev.Player, erri.escapeXp, PluginClass.Translation.ActiveTranslation.escapeMessage);
-                SSSMethods.AddDataFloat(ev.Player, PluginClass.escapesData); // U
+                SSSMethods.AddDataFloat(ev.Player, PluginClass.escapesData);
 
                 foreach (Player p in Server.Get.GetPlayers(p => SSSMethods.AreAllies(p, ev.Player) && (p.Zone == ZoneType.Surface || !PluginClass.Config.assistEscapeSurfaceZone) && p != ev.Player))
                     SSSMethods.AddXp(p, SSSMethods.GetXpRewardsRoleID(p).escapeAssistXp, PluginClass.Translation.ActiveTranslation.escapeAssistMessage.Replace("%player%", ev.Player.NickName));
+                if (ev.Player.TeamID == (int)Team.SCP)
+                    foreach (Player p in Server.Get.Players)
+                        SSSMethods.AddXp(p, SSSMethods.GetXpRewardsRoleID(p).scpEscapeXp, PluginClass.Translation.ActiveTranslation.scpEscapeMessage.Replace("%player%", ev.Player.NickName));
             }
             
             if (ev.Cuffer == null)
                 return;
 
-            SSSMethods.AddXp(ev.Cuffer, SSSMethods.GetXpRewardsRoleID(ev.Cuffer).captureXp, PluginClass.Translation.ActiveTranslation.captureMessage.Replace("%player%", ev.Player.NickName));
+            if (!SSSMethods.AreAllies(ev.Cuffer, ev.Player)) // Idk why you would cuff your allie if you manage to do this with a plug-in but just in case
+                SSSMethods.AddXp(ev.Cuffer, SSSMethods.GetXpRewardsRoleID(ev.Cuffer).captureXp, PluginClass.Translation.ActiveTranslation.captureMessage.Replace("%player%", ev.Player.NickName));
         }
 
         private void OnWarheadDetonation()
