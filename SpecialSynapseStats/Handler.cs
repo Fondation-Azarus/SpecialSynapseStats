@@ -51,6 +51,13 @@ namespace SpecialSynapseStats
                 {
                     ev.Player.GiveTextHint(PluginClass.Translation.ActiveTranslation.cantAddDataHint, 10);
                     ev.Player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.cantAddDataConsoleMessage);
+
+                    if (PluginClass.Config.securityStatsEnabled)
+                    {
+                        PluginClass.FirstLogin(ev.Player);
+                        ev.Player.SetData(PluginClass.dataConsent, "false");
+                    }
+
                     return;
                 }
 

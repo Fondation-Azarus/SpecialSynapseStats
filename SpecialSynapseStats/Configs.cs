@@ -74,6 +74,25 @@ namespace SpecialSynapseStats
         [Description("A list of stats that should be private :")]
         public List<string> privateStats = new List<string> { PluginClass.dataConsent, PluginClass.teamkillsData, PluginClass.kicksData, PluginClass.bansData, PluginClass.totalBanDurationData };
 
+        [Description("Should this plug-in create a SSS Profile for security purposes ? :")]
+        public bool securityStatsEnabled = false;
+
+        [Description("A list of stats that can be used for security purposes :")]
+        public List<string> securityStats = new List<string>
+        {
+            PluginClass.kicksData,
+            PluginClass.bansData,
+            PluginClass.totalBanDurationData
+        };
+
+        [Description("In what color should XP console messages be sent ? :")]
+        public string xpConsoleColor = "grey";
+
+        [Description("In what color should level console messages be sent ? :")]
+        public string levelConsoleColor = "grey";
+
+        [Description("In what color should big level console messages be sent ? :")]
+        public string bigLevelConsoleColor = "grey";
 
         public class XpRewardsRoleID // It could be a struct but they can't be null so I can't easily know if the specified one exists
         {

@@ -32,9 +32,9 @@ namespace SpecialSynapseStats
         /// <summary>
         /// Verifies whether you can add data to the player <paramref name="player"/> by VSR standards or not.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player.</param> <param name="key">The key, not necessary if your key isn't meant to be used for security purposes.</param>
         /// <returns><see langword="true"/> if you can add data to this player ; otherwise, <see langword="false"/>.</returns>
-        public static bool CanAddData(Player player)
+        public static bool CanAddData(Player player, string key = null)
         {
             //if (Config.disabled) Even when this plug-in is disabled other plug-ins should still be able to use the system.
             //    return false;
@@ -42,6 +42,9 @@ namespace SpecialSynapseStats
                 return false;
 
             if (!player.DoNotTrack)
+                return true;
+
+            if (PluginClass.Config.securityStatsEnabled && PluginClass.Config.securityStats.Contains(key))
                 return true;
 
             if (player.GetData(PluginClass.dataConsent) == null || player.GetData(PluginClass.dataConsent) != "true")
@@ -64,7 +67,7 @@ namespace SpecialSynapseStats
         /// <param name="player">The player.</param><param name="key">The key.</param><param name="number">The value you want to add.</param>
         public static void AddDataFloat(Player player, string key, float number = 1)
         {
-            if (!CanAddData(player))
+            if (!CanAddData(player, key))
                 return;
 
             string value = player.GetData(key);
@@ -120,7 +123,7 @@ namespace SpecialSynapseStats
                     player.SendConsoleMessage(reason == "" ? PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", "green");
                 }
                 else
-                    player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()), "green");
+                    player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()), PluginClass.Config.xpConsoleColor);
 
             AddLevel(player, level);
         }
@@ -153,7 +156,7 @@ namespace SpecialSynapseStats
 
             player.SetData(PluginClass.levelData, levelTotal.ToString());
             player.GiveTextHint(PluginClass.Translation.ActiveTranslation.levelMessage.Replace("%level%", levelTotal.ToString()), 4);
-            player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.levelMessage.Replace("%level%", levelTotal.ToString()), "green");
+            player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.levelMessage.Replace("%level%", levelTotal.ToString()), PluginClass.Config.levelConsoleColor);
 
             AddBigLevel(player, bigLevel);
         }
@@ -169,7 +172,7 @@ namespace SpecialSynapseStats
 
             AddDataFloat(player, PluginClass.bigLevelData, bigLevel);
             player.GiveTextHint(PluginClass.Translation.ActiveTranslation.bigLevelMessage.Replace("%bigLevel%", player.GetData(PluginClass.bigLevelData)), 6);
-            player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.bigLevelMessage.Replace("%bigLevel%", player.GetData(PluginClass.bigLevelData)), "green");
+            player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.bigLevelMessage.Replace("%bigLevel%", player.GetData(PluginClass.bigLevelData)), PluginClass.Config.bigLevelConsoleColor);
         }
 
         /// <summary>
@@ -187,6 +190,16 @@ namespace SpecialSynapseStats
 
             if (key.ToLower() == "all")
             {
+                if (PluginClass.Config.securityStatsEnabled)
+                {
+                    foreach (string k in pdo.Data.Keys)
+                        if (!PluginClass.Config.securityStats.Contains(k))
+                            if (float.TryParse(player.GetData(k), out _))
+                                player.SetData(k, "0");
+                    player.SetData(PluginClass.dataConsent, "false");
+                    return true;
+                }
+                    
                 pdo.Data.Clear();
                 DatabaseManager.PlayerRepository.Save(pdo);
                 return true;

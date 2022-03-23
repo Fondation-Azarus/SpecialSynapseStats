@@ -49,6 +49,8 @@ namespace SpecialSynapseStats
 
         public string seeProfilOkMessage = "You should see a SSS Profile.";
 
+        public string seeProfilErrorMessage = "This player's SSS Profile isn't accessible.";
+
         public IDictionary<string, string> translationDictionnary = new Dictionary<string, string>
         {
             { PluginClass.firstLogin, "First login" },
