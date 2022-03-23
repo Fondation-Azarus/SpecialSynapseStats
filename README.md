@@ -2,6 +2,7 @@
 A Synapse 2 plug-in that adds a XP and a stats system you can easily use in your server or your own plug-ins.
 
 **TO RESPECT THE 8.11 [VSR](https://scpslgame.com/Verified_server_rules.pdf) RULE THIS PLUG-IN WON'T STORE ANY DATA FROM PLAYERS WHO ENABLED "Do Not Track" (DNT) UNTIL IT RECEIVES CONSENT FROM THE PLAYER VIA THE `.ConsentDNT` COMMAND.**
+EXCEPTION : According to 8.11.1 this plug-in can store data from players to ensure security.
 
 ***
 
