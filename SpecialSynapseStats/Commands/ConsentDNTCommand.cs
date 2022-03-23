@@ -18,7 +18,8 @@ namespace SpecialSynapseStats.Commands
 
             if (context.Player.GetData(PluginClass.dataConsent) == null || context.Player.GetData(PluginClass.dataConsent) != "true")
             {
-                PluginClass.FirstLogin(context.Player);
+                if (context.Player.GetData(PluginClass.dataConsent) == null)
+                    PluginClass.FirstLogin(context.Player);
                 context.Player.SetData(PluginClass.dataConsent, "true");
                 result.Message = PluginClass.Translation.ActiveTranslation.consentOkMessage;
                 result.State = CommandResultState.Ok;

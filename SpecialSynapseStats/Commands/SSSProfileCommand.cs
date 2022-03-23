@@ -82,8 +82,21 @@ namespace SpecialSynapseStats.Commands
                         resultMessage += "\n" + v.Key + " : " + v.Value;
                 }
 
+                else if (pbo.Data.TryGetValue(PluginClass.dataConsent, out string dataConsent) && dataConsent == "false")
+                {
+
+                    result.Message = PluginClass.Translation.ActiveTranslation.seeProfilErrorMessage;
+                    result.State = CommandResultState.NoPermission;
+                    return result;
+                }
+
                 else if (!PluginClass.Config.privateStats.Contains(v.Key))
-                    resultMessage += "\n" + v.Key + " : " + v.Value;
+                {
+                    if (PluginClass.Translation.ActiveTranslation.translationDictionnary.TryGetValue(v.Key, out string translation))
+                        resultMessage += "\n" + translation + " : " + v.Value;
+                    else
+                        resultMessage += "\n" + v.Key + " : " + v.Value;
+                }
             }
             
             result.Message = PluginClass.Translation.ActiveTranslation.seeProfilOkMessage;
