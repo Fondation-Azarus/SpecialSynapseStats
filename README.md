@@ -34,5 +34,5 @@ And more...
 
 ## Installation
 1. [Install Synapse](https://docs.synapsesl.xyz/setup/setup).
-2. Place the `.dll` file that you can download [here](https://github.com/Fondation-Azarus/SpecialSynapseStats/releases/tag/v1.1.0) in your plug-in directory.
+2. Place the `.dll` file that you can download [here](https://github.com/Fondation-Azarus/SpecialSynapseStats/releases/latest) in your plug-in directory.
 3. Restart/Start your server.
