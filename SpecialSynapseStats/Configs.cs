@@ -85,6 +85,9 @@ namespace SpecialSynapseStats
             PluginClass.totalBanDurationData
         };
 
+        [Description("Should securityStats be inverted ? :")]
+        public bool securityStatsInverted = false;
+
         [Description("In what color should XP console messages be sent ? :")]
         public string xpConsoleColor = "grey";
 

@@ -44,7 +44,7 @@ namespace SpecialSynapseStats
             if (!player.DoNotTrack)
                 return true;
 
-            if (PluginClass.Config.securityStatsEnabled && PluginClass.Config.securityStats.Contains(key))
+            if (PluginClass.Config.securityStatsEnabled && PluginClass.Config.securityStatsInverted ? !PluginClass.Config.securityStats.Contains(key) : PluginClass.Config.securityStats.Contains(key))
                 return true;
 
             if (player.GetData(PluginClass.dataConsent) == null || player.GetData(PluginClass.dataConsent) != "true")
@@ -96,7 +96,7 @@ namespace SpecialSynapseStats
             // Yay lots of maths ! :D
 
 
-            if (!TryParseFloat(player, PluginClass.experienceData, out float parsedXp))
+            if (!TryParseFloat(player, PluginClass.experienceData, out float parsedXp, xp.ToString()))
                 return;
             float xpTotal = parsedXp + (float)Math.Round(xp, 2);
             int level = 0;
@@ -138,7 +138,7 @@ namespace SpecialSynapseStats
                 return;
 
 
-            if (!TryParseFloat(player, PluginClass.levelData, out float parsedLevel))
+            if (!TryParseFloat(player, PluginClass.levelData, out float parsedLevel, level.ToString()))
                 return;
             int levelTotal = (int)parsedLevel + level;
 
@@ -227,7 +227,7 @@ namespace SpecialSynapseStats
         /// <returns><see cref="Configs.XpRewardsRoleID"/> if it finds one ; otherwise, <see langword="null"/>.</returns>
         public static Configs.XpRewardsRoleID GetXpRewardsRoleID(Player player)
         {
-            if (player == null || !CanAddData(player))
+            if (player == null) // || !CanAddData(player)) It should be returned non the less
                 return null;
 
             return PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.roleID == player.RoleID || (e.team == Team.MTF && PurelyMTF(player))) ?? PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.team == player.Team);
