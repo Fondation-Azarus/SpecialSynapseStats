@@ -193,7 +193,7 @@ namespace SpecialSynapseStats
                 if (PluginClass.Config.securityStatsEnabled)
                 {
                     foreach (string k in pdo.Data.Keys)
-                        if (!PluginClass.Config.securityStats.Contains(k))
+                        if (PluginClass.Config.securityStatsInverted ? PluginClass.Config.securityStats.Contains(k) : !PluginClass.Config.securityStats.Contains(k))
                             if (float.TryParse(player.GetData(k), out _))
                                 player.SetData(k, "0");
                     player.SetData(PluginClass.dataConsent, "false");
