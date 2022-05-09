@@ -142,13 +142,17 @@ namespace SpecialSynapseStats
             Configs.XpRewardsRoleID erri = SSSMethods.GetXpRewardsRoleID(ev.Killer);
             if (erri != null)
             {
-                if (!erri.roleIDKillXp.TryGetValue(ev.Victim.RoleID, out float xp1))
-                {
-                    if (erri.teamKillXp.TryGetValue(ev.Victim.Team, out float xp2))
-                        SSSMethods.AddXp(ev.Killer, xp2, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
-                }
-                else
+                if (erri.roleIDKillXp.TryGetValue(ev.Victim.RoleID, out float xp1))
                     SSSMethods.AddXp(ev.Killer, xp1, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
+
+                else if (erri.teamIDKillXp.TryGetValue(ev.Victim.TeamID, out float xp2))
+                    SSSMethods.AddXp(ev.Killer, xp2, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
+
+                else if (erri.roleKillXp.TryGetValue(ev.Victim.RoleType, out float xp3))
+                    SSSMethods.AddXp(ev.Killer, xp3, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
+
+                else if (erri.teamKillXp.TryGetValue(ev.Victim.Team, out float xp4))
+                    SSSMethods.AddXp(ev.Killer, xp4, PluginClass.Translation.ActiveTranslation.killMessage.Replace("%victim%", ev.Victim.NickName));
             }
 
             if (ev.Victim.Team == Team.SCP && ev.Killer.Team != Team.SCP && ev.DamageType != DamageType.Warhead)

@@ -35,8 +35,8 @@ namespace SpecialSynapseStats
             {
                 new XpRewardsRoleID{ roleID = (int)RoleType.ClassD, survivalXp = 5, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 20}, {(int)RoleType.FacilityGuard, 35}}, teamKillXp = new Dictionary<Team, float>() { { Team.MTF, 40 }, {Team.SCP, 80 } } },
                 new XpRewardsRoleID{ roleID = (int)RoleType.Scientist, survivalXp = 6, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 40 }, {Team.SCP, 100} }, scpKillAssistXp = 50 },
-                new XpRewardsRoleID{ roleID = (int)RoleType.FacilityGuard, survivalXp = 7, escapeAssistXp = 50, captureXp = 50, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 8}}, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 35 }, {Team.SCP, 100} }, scpKillAssistXp = 50 },
-                new XpRewardsRoleID{ team = Team.MTF, survivalXp = 7, escapeAssistXp = 60, captureXp = 35, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 30 }, {Team.SCP, 100} }, scpKillAssistXp = 50 },
+                new XpRewardsRoleID{ roleID = (int)RoleType.FacilityGuard, survivalXp = 7, escapeAssistXp = 50, captureXp = 50, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 8}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 35 }, { (int)Team.SCP, 100} }, scpKillAssistXp = 50 },
+                new XpRewardsRoleID{ team = Team.MTF, survivalXp = 7, escapeAssistXp = 60, captureXp = 35, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 30 }, {(int)Team.SCP, 100} }, scpKillAssistXp = 50 },
                 new XpRewardsRoleID{ team = Team.CHI, survivalXp = 7, escapeAssistXp = 20, captureXp = 42, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 20 } }, teamKillXp = new Dictionary<Team, float>() { { Team.MTF, 30 }, {Team.SCP, 10} } },
                 new XpRewardsRoleID{ roleID = (int)RoleType.Scp173, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 3 }, {Team.MTF, 5} } },
                 new XpRewardsRoleID{ roleID = (int)RoleType.Scp096, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 3 }, {Team.MTF, 5} } },
@@ -97,6 +97,14 @@ namespace SpecialSynapseStats
         [Description("In what color should big level console messages be sent ? :")]
         public string bigLevelConsoleColor = "grey";
 
+        [Description("A list of stats that should be hidden when using the `.SSSProfile` command, stats cannot be hidden if they are used for security purposes :")]
+        public List<string> secretStats = new List<string>
+        {
+        };
+
+        [Description("A string that automatically turns stats which contain this string into a secret stat :")]
+        public string secretStatString = "SecretStat";
+
         public class XpRewardsRoleID // It could be a struct but they can't be null so I can't easily know if the specified one exists
         {
             public int roleID;
@@ -106,11 +114,12 @@ namespace SpecialSynapseStats
             public float escapeAssistXp;
             public float captureXp;
             public IDictionary<int, float> roleIDKillXp;
+            public IDictionary<RoleType, float> roleKillXp;
+            public IDictionary<int, float> teamIDKillXp;
             public IDictionary<Team, float> teamKillXp;
             public float scpKillAssistXp;
             public float scpEscapeXp;
             public float warheadXp;
-
         }
     }
 }
