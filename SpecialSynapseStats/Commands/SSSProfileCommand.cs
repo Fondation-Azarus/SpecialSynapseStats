@@ -74,8 +74,8 @@ namespace SpecialSynapseStats.Commands
 
             foreach (var v in pbo.Data)
             {
-                if (PluginClass.Config.secretStats.Contains(v.Key) && !PluginClass.Config.securityStats.Contains(v.Key))
-                        continue;
+                if (PluginClass.Config.secretStats.Contains(v.Key) && (!PluginClass.Config.securityStatsEnabled || !PluginClass.Config.securityStats.Contains(v.Key)))
+                    continue;
 
                 if (seePrivateStats)
                 {
