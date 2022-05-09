@@ -74,6 +74,9 @@ namespace SpecialSynapseStats.Commands
 
             foreach (var v in pbo.Data)
             {
+                if (PluginClass.Config.secretStats.Contains(v.Key) && !PluginClass.Config.securityStats.Contains(v.Key))
+                        continue;
+
                 if (seePrivateStats)
                 {
                     if (PluginClass.Translation.ActiveTranslation.translationDictionnary.TryGetValue(v.Key, out string translation))
@@ -84,7 +87,6 @@ namespace SpecialSynapseStats.Commands
 
                 else if (pbo.Data.TryGetValue(PluginClass.dataConsent, out string dataConsent) && dataConsent == "false")
                 {
-
                     result.Message = PluginClass.Translation.ActiveTranslation.seeProfilErrorMessage;
                     result.State = CommandResultState.NoPermission;
                     return result;
