@@ -58,7 +58,7 @@ namespace SpecialSynapseStats
                 player.SetData(PluginClass.dataConsent, "false");
                 return false;
             }
-            
+
         }
 
         /// <summary>
@@ -117,13 +117,13 @@ namespace SpecialSynapseStats
             }
 
             player.SetData(PluginClass.experienceData, xpTotal.ToString());
-                if (reason != "none")
-                {
-                    player.GiveTextHint(reason == "" ? PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", 2);
-                    player.SendConsoleMessage(reason == "" ? PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", "green");
-                }
-                else
-                    player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()), PluginClass.Config.xpConsoleColor);
+            if (reason != "none")
+            {
+                player.GiveTextHint(reason == "" ? PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", 2);
+                player.SendConsoleMessage(reason == "" ? PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()) : $"{reason}\n{PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString())}", "green");
+            }
+            else
+                player.SendConsoleMessage(PluginClass.Translation.ActiveTranslation.xpMessage.Replace("%xp%", xp.ToString()), PluginClass.Config.xpConsoleColor);
 
             AddLevel(player, level);
         }
@@ -180,7 +180,6 @@ namespace SpecialSynapseStats
         /// </summary>
         /// <param name="player">The player.</param><param name="key"> The key, put "all" to delete every KeyValuePair.</param>
         /// <returns><see langword="true"/> if the specified KeyValuePair was deleted ; otherwise, <see langword="false"/>.</returns>
-        /// <exception cref="NullReferenceException"/>
         public static bool DeleteData(Player player, string key)
         {
             PlayerDbo pdo = DatabaseManager.PlayerRepository.FindByGameId(player.UserId);
@@ -199,7 +198,7 @@ namespace SpecialSynapseStats
                     player.SetData(PluginClass.dataConsent, "false");
                     return true;
                 }
-                    
+
                 pdo.Data.Clear();
                 DatabaseManager.PlayerRepository.Save(pdo);
                 return true;
@@ -218,7 +217,7 @@ namespace SpecialSynapseStats
         /// </summary>
         /// <param name="player">The player.</param>
         /// <returns><see langword="true"/> if the player <paramref name="player"/>'s <see cref="Team"/> is equal to <see cref="Team.MTF"/> or if he's <see cref="RoleType"/> is equal to <see cref="RoleType.FacilityGuard"/> and the owner of this server wants them to be considered as part of <see cref="Team.MTF"/> ; otherwise, <see langword="false"/>.</returns>
-        private static bool PurelyMTF(Player player) => PluginClass.Config.guardMTF ? player.Team == Team.MTF : player.RoleID != (int)RoleType.FacilityGuard && player.Team == Team.MTF;
+        private static bool PurelyMTF(Player player) => PluginClass.Config.guardMTF ? player.TeamID == (int)Team.MTF : player.RoleID != (int)RoleType.FacilityGuard && player.TeamID == (int)Team.MTF;
 
         /// <summary>
         /// Tries to get the <see cref="Configs.XpRewardsRoleID"/> that has a <see cref="Configs.XpRewardsRoleID.roleID"/> equal to the player <paramref name="player"/>'s one, if it doesn't find one it will try to find one that has a <see cref="Configs.XpRewardsRoleID.team"/> equal to the player <paramref name="player"/>'s one.
@@ -230,15 +229,23 @@ namespace SpecialSynapseStats
             if (player == null) // || !CanAddData(player)) It should be returned non the less
                 return null;
 
-            return PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.roleID == player.RoleID || (e.team == Team.MTF && PurelyMTF(player))) ?? PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.team == player.Team);
+            return PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.roleID == player.RoleID || e.teamID == player.TeamID || e.roleType == player.RoleType || (e.teamID == (int)Team.MTF && PurelyMTF(player))) ?? PluginClass.Config.listXpRewardsRoleID.FirstOrDefault(e => e.teamID == player.TeamID);
         }
 
         /// <summary>
         /// Verifies if the players <paramref name="firstPlayer"/> and <paramref name="secondPlayer"/> are allies.
         /// </summary>
-        /// <param name="firstPlayer">The first player (order doesn't matter).</param><param name="secondPlayer">The second player (order doesn't matter).</param>
+        /// <param name="firstPlayer">There's no specific order.</param><param name="secondPlayer">There's no specific order.</param>
         /// <returns><see langword="true"/> if they are allies ; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="NullReferenceException"/>
-        public static bool AreAllies(Player firstPlayer, Player secondPlayer) => firstPlayer.TeamID == secondPlayer.TeamID || (firstPlayer.TeamID == (int)Team.MTF && secondPlayer.TeamID == (int)Team.RSC) || (firstPlayer.TeamID == (int)Team.CHI && secondPlayer.TeamID == (int)Team.CDP);
+        public static bool AreAllies(Player firstPlayer, Player secondPlayer)
+        {
+            if (Synapse.Api.Roles.RoleManager.Get.GetCustomRole(firstPlayer.RoleID) != null && firstPlayer.CustomRole.GetFriendsID().Contains(secondPlayer.TeamID))
+                return true;
+            if (Synapse.Api.Roles.RoleManager.Get.GetCustomRole(secondPlayer.RoleID) != null && secondPlayer.CustomRole.GetFriendsID().Contains(firstPlayer.TeamID))
+                return true;
+
+            return firstPlayer.TeamID == secondPlayer.TeamID || (firstPlayer.TeamID == (int)Team.MTF && secondPlayer.TeamID == (int)Team.RSC) || (secondPlayer.TeamID == (int)Team.MTF && firstPlayer.TeamID == (int)Team.RSC) || (firstPlayer.TeamID == (int)Team.CHI && secondPlayer.TeamID == (int)Team.CDP) || (secondPlayer.TeamID == (int)Team.CHI && firstPlayer.TeamID == (int)Team.CDP);
+        }
     }
 }

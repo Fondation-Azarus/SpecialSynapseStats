@@ -33,18 +33,18 @@ namespace SpecialSynapseStats
         [Description("The amount of XP a specific role or team should get for a specific action :")]
         public List<XpRewardsRoleID> listXpRewardsRoleID = new List<XpRewardsRoleID>()
             {
-                new XpRewardsRoleID{ roleID = (int)RoleType.ClassD, survivalXp = 5, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 20}, {(int)RoleType.FacilityGuard, 35}}, teamKillXp = new Dictionary<Team, float>() { { Team.MTF, 40 }, {Team.SCP, 80 } } },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scientist, survivalXp = 6, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 40 }, {Team.SCP, 100} }, scpKillAssistXp = 50 },
+                new XpRewardsRoleID{ roleID = (int)RoleType.ClassD, survivalXp = 5, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 20}, {(int)RoleType.FacilityGuard, 35}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.MTF, 40 }, { (int)Team.SCP, 80 } } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scientist, survivalXp = 6, escapeXp = 100, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 40 }, { (int)Team.SCP, 100} }, scpKillAssistXp = 50 },
                 new XpRewardsRoleID{ roleID = (int)RoleType.FacilityGuard, survivalXp = 7, escapeAssistXp = 50, captureXp = 50, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 8}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 35 }, { (int)Team.SCP, 100} }, scpKillAssistXp = 50 },
-                new XpRewardsRoleID{ team = Team.MTF, survivalXp = 7, escapeAssistXp = 60, captureXp = 35, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 30 }, {(int)Team.SCP, 100} }, scpKillAssistXp = 50 },
-                new XpRewardsRoleID{ team = Team.CHI, survivalXp = 7, escapeAssistXp = 20, captureXp = 42, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 20 } }, teamKillXp = new Dictionary<Team, float>() { { Team.MTF, 30 }, {Team.SCP, 10} } },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scp173, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 3 }, {Team.MTF, 5} } },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scp096, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 3 }, {Team.MTF, 5} } },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scp049, survivalXp = 5, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 4 }, { (int)RoleType.Scientist, 4}, { (int)RoleType.FacilityGuard, 4 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 3 }, {Team.MTF, 4} } },
+                new XpRewardsRoleID{ teamID = (int)Team.MTF, survivalXp = 7, escapeAssistXp = 60, captureXp = 35, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.ClassD, 10}}, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 30 }, {(int)Team.SCP, 100} }, scpKillAssistXp = 50 },
+                new XpRewardsRoleID{ teamID = (int)Team.CHI, survivalXp = 7, escapeAssistXp = 20, captureXp = 42, roleIDKillXp = new Dictionary<int,float>(){ {(int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 20 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.MTF, 30 }, { (int)Team.SCP, 10} } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scp173, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 3 }, { (int)Team.MTF, 5} } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scp096, survivalXp = 2.5f, escapeXp = 30, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5}, { (int)RoleType.FacilityGuard, 5 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 3 }, { (int)Team.MTF, 5} } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scp049, survivalXp = 5, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 4 }, { (int)RoleType.Scientist, 4}, { (int)RoleType.FacilityGuard, 4 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 3 }, { (int)Team.MTF, 4} } },
                 new XpRewardsRoleID{ roleID = (int)RoleType.Scp106, survivalXp = 2, escapeXp = 10 },
                 new XpRewardsRoleID{ roleID = (int)RoleType.Scp079, survivalXp = 2 },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scp93989, survivalXp = 2.5f, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5 }, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 4 }, {Team.MTF, 5 } } },
-                new XpRewardsRoleID{ roleID = (int)RoleType.Scp93953, survivalXp = 2.5f, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5 }, { (int)RoleType.FacilityGuard, 5 } }, teamKillXp = new Dictionary<Team, float>() { { Team.CHI, 4 }, {Team.MTF, 5 } } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scp93989, survivalXp = 2.5f, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5 }, { (int)RoleType.FacilityGuard, 5 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 4 }, { (int)Team.MTF, 5 } } },
+                new XpRewardsRoleID{ roleID = (int)RoleType.Scp93953, survivalXp = 2.5f, escapeXp = 50, roleIDKillXp = new Dictionary<int,float>(){ { (int)RoleType.ClassD, 5 }, { (int)RoleType.Scientist, 5 }, { (int)RoleType.FacilityGuard, 5 } }, teamIDKillXp = new Dictionary<int, float>() { { (int)Team.CHI, 4 }, { (int)Team.MTF, 5 } } },
             };
 
         [Description("XP given to connected players in general :")]
@@ -107,15 +107,17 @@ namespace SpecialSynapseStats
 
         public class XpRewardsRoleID // It could be a struct but they can't be null so I can't easily know if the specified one exists
         {
-            public int roleID;
-            public Team team;
+            public int roleID = -1;
+            public int teamID = -1;
+            public RoleType roleType = RoleType.None;
+            //public Team team;
             public float survivalXp;
             public float escapeXp;
             public float escapeAssistXp;
             public float captureXp;
             public IDictionary<int, float> roleIDKillXp;
-            public IDictionary<RoleType, float> roleKillXp;
             public IDictionary<int, float> teamIDKillXp;
+            public IDictionary<RoleType, float> roleKillXp;
             public IDictionary<Team, float> teamKillXp;
             public float scpKillAssistXp;
             public float scpEscapeXp;
