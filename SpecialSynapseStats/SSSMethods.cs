@@ -95,7 +95,6 @@ namespace SpecialSynapseStats
 
             // Yay lots of maths ! :D
 
-
             if (!TryParseFloat(player, PluginClass.experienceData, out float parsedXp, xp.ToString()))
                 return;
             float xpTotal = parsedXp + (float)Math.Round(xp, 2);
@@ -233,19 +232,17 @@ namespace SpecialSynapseStats
         }
 
         /// <summary>
-        /// Verifies if the players <paramref name="firstPlayer"/> and <paramref name="secondPlayer"/> are allies.
+        /// Verifies if the players <paramref name="firstPlayer"/> and <paramref name="secondPlayer"/> are allies, ignores FF.
         /// </summary>
         /// <param name="firstPlayer">There's no specific order.</param><param name="secondPlayer">There's no specific order.</param>
         /// <returns><see langword="true"/> if they are allies ; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="NullReferenceException"/>
-        public static bool AreAllies(Player firstPlayer, Player secondPlayer)
+        public static bool AreAllies(Player firstPlayer, Player secondPlayer) //=> SynapseExtensions.GetHarmPermission(firstPlayer, secondPlayer); This doesn't work in my case because this needs to ignore FF even if it's enabled.
         {
-            if (Synapse.Api.Roles.RoleManager.Get.GetCustomRole(firstPlayer.RoleID) != null && firstPlayer.CustomRole.GetFriendsID().Contains(secondPlayer.TeamID))
-                return true;
-            if (Synapse.Api.Roles.RoleManager.Get.GetCustomRole(secondPlayer.RoleID) != null && secondPlayer.CustomRole.GetFriendsID().Contains(firstPlayer.TeamID))
-                return true;
-
-            return firstPlayer.TeamID == secondPlayer.TeamID || (firstPlayer.TeamID == (int)Team.MTF && secondPlayer.TeamID == (int)Team.RSC) || (secondPlayer.TeamID == (int)Team.MTF && firstPlayer.TeamID == (int)Team.RSC) || (firstPlayer.TeamID == (int)Team.CHI && secondPlayer.TeamID == (int)Team.CDP) || (secondPlayer.TeamID == (int)Team.CHI && firstPlayer.TeamID == (int)Team.CDP);
+            if (firstPlayer.CustomRole == null && secondPlayer.CustomRole == null)
+                return firstPlayer.Faction == secondPlayer.Faction;
+            else
+                return (firstPlayer.CustomRole != null && !firstPlayer.CustomRole.GetEnemiesID().Contains(secondPlayer.TeamID)) || (secondPlayer.CustomRole != null && !secondPlayer.CustomRole.GetEnemiesID().Contains(firstPlayer.TeamID));
         }
     }
 }
